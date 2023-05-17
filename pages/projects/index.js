@@ -20,13 +20,27 @@ export default function Projects()
                     <h1 className='text-white text-4xl font-semibold py-16'>Featured Projects</h1>
                 </div>
 
-                <div className='grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-10 justify-evenly px-20'>
+                <div className='grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-24 justify-evenly px-20'>
                     <ProjectCard 
                         title="Tic Tac Toe"
                         description="A fully working tic tac toe board built with React!"
                         image="https://web.stevens.edu/news/newspoints/zoom-bg/Stevens-zoom-background-garden.jpg"
                         date="May 5th, 2023"
                         link='tictactoe'
+                    />
+                    <ProjectCard 
+                        title="Gridder"
+                        description="A fun grid puzzle game I made in highschool!"
+                        image="https://img.itch.zone/aW1nLzgxNjAwOTcucG5n/315x250%23c/2oiljW.png"
+                        date="May 5th, 2023"
+                        link='gridder'
+                    />
+                    <ProjectCard 
+                        title="Resume Re-Writer"
+                        description="AI that rewrites your resume based on your requested job niche."
+                        image="https://img.itch.zone/aW1nLzgxNjAwOTcucG5n/315x250%23c/2oiljW.png"
+                        date="May 17th, 2023"
+                        link='resume'
                     />
                 </div>
             </div>
