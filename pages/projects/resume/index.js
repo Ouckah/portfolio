@@ -57,8 +57,8 @@ export default function Resume()
             <div className='w-full h-screen bg-almost-black-500'>
                 { response ? (
 
-                    <div className="text-white">
-                        <ReactMarkdown children={response} />
+                    <div>
+                        <ReactMarkdown>{response}</ReactMarkdown>
                     </div>
 
                 ) : (
