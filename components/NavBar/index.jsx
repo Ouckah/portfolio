@@ -10,7 +10,7 @@ export const NavBar = () =>
     
         <div className='bg-almost-black-500 h-28'>
             <div className='flex flex-row justify-evenly items-center px-20 w-full h-28 p-5'>
-                <div className='flex flex-row justify-evenly items-center gap-20'>
+                <div className='flex flex-row justify-evenly items-center lg:gap-20 gap-10'>
                     
                     <NavLink text='Home' link='.'/>
                     <NavLink text='About' link='/about'/>
