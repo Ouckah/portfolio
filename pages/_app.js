@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import 'tailwindcss/tailwind.css';
-import { Header } from '../components/Header';
+import { NavBar } from '../components/NavBar';
 
 function MyApp ({ Component, pageProps }) 
 {
@@ -8,7 +8,7 @@ function MyApp ({ Component, pageProps })
 
     <>
     
-      <Header/>
+      <NavBar/>
       <Component {...pageProps} />
     
     </>

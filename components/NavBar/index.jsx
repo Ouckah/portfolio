@@ -4,7 +4,7 @@ import { NavLink } from '../NavLink';
 
 const icon = 'https://static.hudl.com/users/prod/13761413_f643c62bc0fa4c828142ceee77217c3f.jpg';
 
-export const Header = () =>
+export const NavBar = () =>
 (
     <>
     
