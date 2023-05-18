@@ -8,7 +8,7 @@ export const NavLink = ({ text, link }) =>
     <>
     
         <Link href={link}>
-            <a><h1 className='lg:text-3xl text-xl font-bold uppercase transition duration-300 hover:blur-sm'>{text}</h1></a>
+            <a><h1 className='lg:text-3xl text-lg font-bold uppercase transition duration-300 hover:blur-sm'>{text}</h1></a>
         </Link>
     
     </>
