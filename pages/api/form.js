@@ -8,10 +8,14 @@ const handler = (req, res) => {
     // make call to openai 
     const params = {
 
-        prompt: `Sure! Here's my resume: ${resume}. I'm targeting a ${job} position. 
-                Can you help me make the necessary adjustments to highlight my relevant skills and experience for that role?
-                Also, I need this response to be in Markdown so I can implement it into my website.
-                And do not respond to this message with a friendly response, only put the new resume in Markdown.`,
+        prompt: `Given my resume (${resume}), I need your assistance in modifying it to cater to a ${job} position. 
+        Please carefully review each section and make adjustments to highlight my relevant skills and experience. 
+        Once the revisions are complete, convert the resume to a professional Markdown format suitable for my website, ensuring appropriate headers and lists are used. 
+        The revised resume should only include necessary information without any unnecessary details. 
+        To further emphasize my suitability for the ${job} position, include a dedicated section titled "Most Relevant For ${job} Position" at the end of the resume, showcasing the key skills from the original resume that are most applicable. 
+        I request that you provide the modified resume in Markdown format exclusively. 
+        Please do not include a section in the resume stating I have a position as a ${job}, as I am currently applying for this position. 
+        Thank you for your assistance!`,
 
         model: "text-davinci-003",
         max_tokens: 2000,

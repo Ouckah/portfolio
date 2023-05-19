@@ -4,6 +4,8 @@ import axios from "axios";
 
 // markdown
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import styles from "../../../styles/markdown.module.css"
+import Link from "next/link";
 
 export default function Resume() 
 {
@@ -32,6 +34,7 @@ export default function Resume()
         const { job, resume } = event.target;
 
         // send post req to internal form api
+        // TODO: PROD -> localhost:300 to ouckah.dev
         axios.post("http://localhost:3000/api/form", {
             key: key, 
             job: job.value,
@@ -56,11 +59,21 @@ export default function Resume()
 
             <div className='w-full h-screen bg-almost-black-500'>
                 { response ? (
+                    <>
 
-                    <div>
-                        <ReactMarkdown>{response}</ReactMarkdown>
-                    </div>
+                        <div className='flex flex-row justify-evenly items-center w-full h-24 bg-almost-black-500'>
+                            <Link href="/projects/resume"><button className="w-24 h-12">Back</button></Link>
+                        </div>
+                        
+                        <div className="w-full min-h-full p-10 bg-almost-black-500">
+                            <div className="w-full h-full p-10 bg-white rounded-lg">
+                                <div className={styles.markdown}>
+                                    <ReactMarkdown>{response}</ReactMarkdown>
+                                </div>
+                            </div>
+                        </div>
 
+                    </>
                 ) : (
 
                     <form 
