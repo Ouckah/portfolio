@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useState } from "react";
+import { ResumeDownloadButton } from "../../../components/ResumeDownloadButton";
 
 import axios from "axios";
 
 // markdown
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import styles from "../../../styles/markdown.module.css"
+import styles from "../../../styles/markdown.module.css";
 import Link from "next/link";
 
 export default function Resume() 
@@ -63,8 +64,9 @@ export default function Resume()
 
                         <div className='flex flex-row justify-evenly items-center w-full h-24 bg-almost-black-500'>
                             <Link href="/projects/resume"><button className="w-24 h-12">Back</button></Link>
+                            {/* <ResumeDownloadButton markdown={response} /> */}
                         </div>
-                        
+
                         <div className="w-full min-h-full p-10 bg-almost-black-500">
                             <div className="w-full h-full p-10 bg-white rounded-lg">
                                 <div className={styles.markdown}>
