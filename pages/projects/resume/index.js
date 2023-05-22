@@ -36,7 +36,7 @@ export default function Resume()
         
         // make request to test api key API
         // TODO: PROD -> localhost:300 to ouckah.dev
-        axios.post("http://ouckah.dev/api/testApiKey", {
+        axios.post("https://ouckah.dev/api/testApiKey", {
             key: key, 
         })
 
@@ -89,7 +89,7 @@ export default function Resume()
                 setSubmitted(true);
                 
                 // TODO: PROD -> localhost:300 to ouckah.dev
-                axios.post("http://ouckah.dev/api/form", {
+                axios.post("https://ouckah.dev/api/form", {
                     key: key, 
                     job: job,
                     description: description,
