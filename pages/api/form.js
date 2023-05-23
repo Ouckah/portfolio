@@ -38,8 +38,10 @@ const handler = (req, res) => {
         .post("https://api.openai.com/v1/completions", params)
         .then((result) => {
             console.log(result);
+            const test = "";
             const response = result.data.choices[0].text;
-            return res.status(200).json({ response: response });
+            test = response + response;
+            return res.status(200).json({ response: test });
         })
         .catch((err) => {
             console.error(err);
