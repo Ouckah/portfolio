@@ -2,6 +2,8 @@ import { getAxiosInstance } from "../../axiosInstance";
 
 const handler = (req, res) => {
 
+    // TODO: Err 502 Badpathway
+
     const { key, job, description, resume } = req.body;
     const client = getAxiosInstance(key);
 
@@ -28,7 +30,7 @@ const handler = (req, res) => {
         At the end of the modified resume, include a section named "Most Relavent Skills for ${job} Position" that includes the most important skills for ${job} from the original resume along with the titles of the experiences and description of how those skills are used in the experiences provided in the original resume. Everything must be in Markdown format. Thank you for your hard work!`,
 
         model: "text-davinci-003",
-        max_tokens: 2000,
+        max_tokens: 10,
         temperature: 0,
     };
 
