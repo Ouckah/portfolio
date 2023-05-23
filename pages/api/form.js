@@ -30,7 +30,7 @@ const handler = (req, res) => {
         At the end of the modified resume, include a section named "Most Relavent Skills for ${job} Position" that includes the most important skills for ${job} from the original resume along with the titles of the experiences and description of how those skills are used in the experiences provided in the original resume. Everything must be in Markdown format. Thank you for your hard work!`,
 
         model: "text-davinci-003",
-        max_tokens: 100,
+        max_tokens: 200,
         temperature: 0,
     };
 
@@ -38,10 +38,8 @@ const handler = (req, res) => {
         .post("https://api.openai.com/v1/completions", params)
         .then((result) => {
             console.log(result);
-            let test = "";
             const response = result.data.choices[0].text;
-            test = response + response;
-            return res.status(200).json({ response: test });
+            return res.status(200).json({ response: response });
         })
         .catch((err) => {
             console.error(err);
