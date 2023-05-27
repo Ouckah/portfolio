@@ -37,8 +37,9 @@ export default function Resume()
     const sendTestRequest = async () => {
         
         // make request to test api key API
-        // TODO: PROD -> localhost:3000 to ouckah.dev
-        axios.post("http://localhost:3000/api/testApiKey", {
+        //! DEV -> localhost:3000
+        //! PROD -> ouckah.dev
+        axios.post("http://ouckah.dev/api/testApiKey", {
             key: key, 
         })
 
