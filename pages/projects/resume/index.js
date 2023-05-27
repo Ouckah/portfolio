@@ -146,6 +146,7 @@ export default function Resume()
         // set states to pre-submission
         setResponse("");
         setSubmitted(false);
+        setKeyStatus("VALID");
 
     }
 
