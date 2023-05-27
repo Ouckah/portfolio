@@ -1,4 +1,3 @@
-import Router from 'next/router'
 import { useState } from "react";
 import { ResumeDownloadButton } from "../../../components/ResumeDownloadButton";
 
