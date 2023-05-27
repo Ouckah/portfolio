@@ -5,7 +5,9 @@ import { ResumeDownloadButton } from "../../../components/ResumeDownloadButton";
 // https://api.openai.com/v1/engines/davinci/completions
 
 import axios from "axios";
-import { getAxiosInstance } from '../../../axiosInstance';
+
+// lang chain
+import { HumanChatMessage, SystemChatMessage } from "langchain/schema";
 
 // material icons
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -13,6 +15,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 // markdown
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import styles from "../../../styles/markdown.module.css";
+import { ChatOpenAI } from 'langchain/chat_models/openai';
 
 export default function Resume() 
 {
@@ -29,14 +32,14 @@ export default function Resume()
     const [resume, setResume] = useState(null);
 
     // store new resume
-    const [response, setResponse] = useState(null);
+    const [response, setResponse] = useState("");
 
     // sends a test req with current key
     const sendTestRequest = async () => {
         
         // make request to test api key API
-        // TODO: PROD -> localhost:300 to ouckah.dev
-        axios.post("https://ouckah.dev/api/testApiKey", {
+        // TODO: PROD -> localhost:3000 to ouckah.dev
+        axios.post("http://localhost:3000/api/testApiKey", {
             key: key, 
         })
 
@@ -88,27 +91,55 @@ export default function Resume()
                 // set state to submitted
                 setSubmitted(true);
                 
-                // TODO: PROD -> localhost:300 to ouckah.dev
-                axios.post("https://ouckah.dev/api/form", {
-                    key: key, 
-                    job: job,
-                    description: description,
-                    resume: resume,
-                })
-                .then((res) => {
-                    const data = res.data || {};
-                    const response = data.response;
-
-                    setResponse(response);
-                    return response;
-                })
-                .catch((error) => {
-                    // set state to not submitted
-                    setSubmitted(false);
-
-                    console.error(error);
-                    return error;
+                // creates a chat to respond to the user's request
+                const chat = new ChatOpenAI({
+                    openAIApiKey: key,
+                    maxTokens: 1000,
+                    streaming: true,
+                    maxConcurrency: 5,
                 });
+                
+                // makes an API call to OpenAI with the following context
+                await chat.call([
+                    
+                    // context that the AI is a job recruiter fixing resumes
+                    new SystemChatMessage(
+
+                        `You are a highly experienced job recruiter with expertise in creating and modifying resumes to match specific job requirements. You have been presented with an original resume and have been tasked with customizing it to fit a particular job and job description. Your goal is to enhance the original resume by highlighting the candidate's relevant skills and experiences, ensuring it aligns with the desired position.
+
+                        Given the original resume, your task is to make the necessary adjustments and modifications to tailor it to the specific job. Carefully review each section of the resume and incorporate details that best showcase the candidates qualifications for the position. Emphasize the key skills and experiences that directly relate to the job description provided.
+        
+                        Please convert the revised resume into a professional and well-formatted document, using Markdown. Ensure that the resume is concise, organized, and effectively highlights the candidate's suitability for the job. Your expertise as a recruiter will play a crucial role in optimizing the resume for the targeted position.
+        
+                        Remember, your modifications should only include relevant information, eliminating any unnecessary details. Provide the revised resume in Markdown format, ready to be presented to potential employers. Your expertise and attention to detail will greatly impact the candidate's chances of securing the desired job`
+                    
+                    ),
+                    
+                    // context of a human asking to have their resume rewritten
+                    new HumanChatMessage(
+                        
+                        `Hi there! Here is the needed information:
+                        Job: ${job},
+                        Job Description: ${description},
+                        Resume: (${resume})
+            
+                        If there is any language used in the original resume that is informal or otherwise not beneficial to getting the wanted ${job} position, rewrite it to a more professional tone and more catered towards the ${job} position. Also fix any grammatical and / or spelling errors in the resume. Keep the formatting in Markdown format.
+            
+                        At the end of the modified resume, include a section named "Most Relavent Skills for ${job} Position" that includes the most important skills for ${job} from the original resume along with the titles of the experiences and description of how those skills are used in the experiences provided in the original resume. Everything must be in Markdown format. Thank you for your hard work!`
+                    
+                    ),
+                ],
+                    undefined,
+                    [
+                        {
+                            // as tokens are fed, append to end of response and display
+                            handleLLMNewToken(token) {
+                                setResponse((prevText) => prevText + token);
+                                console.log({ token });
+                            },
+                        },
+                    ]
+                );
             }
 
         }
@@ -119,7 +150,7 @@ export default function Resume()
         <>
 
             <div className='flex flex-col w-full min-h-screen justify-center items-center bg-almost-black-500'>
-                { response ? (
+                { response.length !== 0 ? (
                     <>
 
                         <div className='flex flex-row justify-evenly items-center w-full h-24 bg-almost-black-500'>
