@@ -48,8 +48,6 @@ export default function Resume()
             const data = res.data || {};
             const response = data.response;
 
-            console.log(response);
-
             setKeyStatus("VALID");
         })
         .catch((error) => {
@@ -58,8 +56,6 @@ export default function Resume()
             setKeyStatus("INVALID");
         });
 
-        console.log(keyStatus);
-
     }
 
     // handles key submission
@@ -67,8 +63,6 @@ export default function Resume()
 
         // prevent page from refreshing
         event.preventDefault();
-
-        console.log(event);
         
         await sendTestRequest();
 
@@ -79,8 +73,6 @@ export default function Resume()
 
         // prevent page from refreshing
         event.preventDefault();
-
-        console.log(event);
 
         if (keyStatus === "VALID") {
 
@@ -135,7 +127,6 @@ export default function Resume()
                             // as tokens are fed, append to end of response and display
                             handleLLMNewToken(token) {
                                 setResponse((prevText) => prevText + token);
-                                console.log({ token });
                             },
                         },
                     ]
