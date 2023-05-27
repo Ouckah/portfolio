@@ -146,6 +146,15 @@ export default function Resume()
 
     }
 
+    // handle clearing the current resume
+    const clearResumeHandler = (event) => {
+
+        // set states to pre-submission
+        setResponse("");
+        setSubmitted(false);
+
+    }
+
     return (
         <>
 
@@ -154,7 +163,7 @@ export default function Resume()
                     <>
 
                         <div className='flex flex-row justify-evenly items-center w-full h-24 bg-almost-black-500'>
-                            <button className="w-24 h-12 bg-almost-black-100 rounded-lg font-bold shadow-md uppercase transition-all duration-300 hover:shadow-xl" onClick={() => Router.reload(window.location.pathname)}>Back</button>
+                            <button className="w-24 h-12 bg-almost-black-100 rounded-lg font-bold shadow-md uppercase transition-all duration-300 hover:shadow-xl" onClick={clearResumeHandler}>Back</button>
                             {/* <ResumeDownloadButton markdown={response} /> */}
                         </div>
 
@@ -183,7 +192,7 @@ export default function Resume()
                                                     OpenAI Key
                                                 </label>    
                                                 <input 
-                                                    className="block w-full p-2.5 marker:text-sm bg-white text-almost-black-100 rounded-lg shadow-md border-2 border-green-400" 
+                                                    className="block w-full p-2.5 marker:text-sm bg-gray-300 text-almost-black-100 rounded-lg shadow-md border-2 border-green-400" 
                                                     type="password" 
                                                     placeholder="sk-8fds2fhG7sdf9as4G2df1df6G3"
                                                     name="key"
