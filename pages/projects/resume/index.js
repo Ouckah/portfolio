@@ -149,6 +149,9 @@ export default function Resume()
     // handle clearing the current resume
     const clearResumeHandler = (event) => {
 
+        // prevent page from refreshing
+        event.preventDefault();
+
         // set states to pre-submission
         setResponse("");
         setSubmitted(false);
