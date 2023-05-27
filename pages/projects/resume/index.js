@@ -39,7 +39,7 @@ export default function Resume()
         // make request to test api key API
         //! DEV -> localhost:3000
         //! PROD -> ouckah.dev
-        axios.post("http://ouckah.dev/api/testApiKey", {
+        axios.post("https://ouckah.dev/api/testApiKey", {
             key: key, 
         })
 
