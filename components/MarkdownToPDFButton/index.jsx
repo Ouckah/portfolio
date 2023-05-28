@@ -1,9 +1,13 @@
 import React from "react";
 import ReactDOMServer from 'react-dom/server';
+import dynamic from "next/dynamic";
 
 // PDF libraries
 import { jsPDF } from "jspdf";
-import html2pdf from 'html2pdf.js';
+const html2pdf = dynamic(
+  () => import('html2pdf.js').then((mode) => mode.html2pdf),
+  { ssr: false }
+); // dynamic import
 
 // material icons
 import DownloadIcon from '@mui/icons-material/Download';
@@ -12,22 +16,27 @@ export const MarkdownToPDFButton = ({ markdown, fileName }) => {
 
   const generatePDF = () => {
 
-    // get static markup from given HTML
-    const html = ReactDOMServer.renderToStaticMarkup(markdown);
+    // make sure were NOT on the server and only on client side
+    if (typeof window !== "undefined") { 
 
-    // create new PDF
-    const pdf = new jsPDF();
+      // get static markup from given HTML
+      const html = ReactDOMServer.renderToStaticMarkup(markdown);
 
-    // options for generated PDF
-    const opt = {
-      margin:       0.5,
-      filename:     `${fileName}.pdf`,
-      enableLinks:  true,
-      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
+      // create new PDF
+      const pdf = new jsPDF();
 
-    // use html2pdf to download to user
-    html2pdf().from(html).set(opt).toPdf(pdf).save();
+      // options for generated PDF
+      const opt = {
+        margin:       0.5,
+        filename:     `${fileName}.pdf`,
+        enableLinks:  true,
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      
+      // use html2pdf to download to user
+      html2pdf().from(html).set(opt).toPdf(pdf).save();
+
+    }
 
   }
 
