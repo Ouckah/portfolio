@@ -39,6 +39,10 @@ export default function Resume()
     const [response, setResponse] = useState("");
     const [isDoneGenerating, setDoneGenerating] = useState(false);
 
+    // TODO: Get controller abort working
+    // signal for aborting chat when user exits early
+    const controller = new AbortController();
+
     // handles form submission
     const submitResumeHandler = async (event) => {
 
@@ -92,7 +96,7 @@ export default function Resume()
                     
                     ),
                 ],
-                    undefined,
+                    { signal: controller.signal },
                     [
                         {
                             // as tokens are fed, append to end of response and display
@@ -117,6 +121,9 @@ export default function Resume()
         // prevent page from refreshing
         event.preventDefault();
 
+        // abort current model call
+        controller.abort();
+
         // set states to pre-submission
         setResponse("");
         setSubmitted(false);
@@ -126,8 +133,12 @@ export default function Resume()
 
     return (
         <>
+            <div className="flex flex-col gap-3 justify-center items-center min-h-[25vh] bg-almost-black-500">
+                <h1 className="lg:text-5xl text-3xl font-bold uppercase transition duration-300 hover:drop-shadow-lg">Resume Rewriter</h1>
+                <p className="lg:text-xl text-md transition duration-300 opacity-50 hover:drop-shadow-lg">Unlock Your Career Potential. Transforming Resumes for Every Job and Opportunity!</p>
+            </div>
 
-            <div className='flex flex-col w-full min-h-screen justify-center items-center bg-almost-black-500'>
+            <div className='flex flex-col w-full min-h-[75vh] justify-center items-center bg-almost-black-500'>
                 { response.length !== 0 ? (
                     <>
 
