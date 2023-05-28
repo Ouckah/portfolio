@@ -1,13 +1,9 @@
 import React from "react";
 import ReactDOMServer from 'react-dom/server';
-import dynamic from "next/dynamic";
 
 // PDF libraries
 import { jsPDF } from "jspdf";
-const html2pdf = dynamic(
-  () => import('html2pdf.js').then((mode) => mode.html2pdf),
-  { ssr: false }
-); // dynamic import
+import html2pdf from 'html2pdf.js';
 
 // material icons
 import DownloadIcon from '@mui/icons-material/Download';

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import dynamic from 'next/dynamic';
 
 // https://api.openai.com/v1/engines/davinci/completions
 
@@ -15,7 +16,10 @@ import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import styles from "../../../styles/markdown.module.css";
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 
-import { MarkdownToPDFButton } from "../../../components/MarkdownToPDFButton";
+// lazy loaded components
+const MarkdownToPDFButton = dynamic(() =>
+  import('../../../components/MarkdownToPDFButton').then((mod) => mod.MarkdownToPDFButton),
+);
 
 export default function Resume() 
 {
