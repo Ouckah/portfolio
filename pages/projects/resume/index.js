@@ -3,18 +3,17 @@ import dynamic from 'next/dynamic';
 
 // https://api.openai.com/v1/engines/davinci/completions
 
-import axios from "axios";
-
 // lang chain
+import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { HumanChatMessage, SystemChatMessage } from "langchain/schema";
-
-// material icons
-import RefreshIcon from '@mui/icons-material/Refresh';
 
 // markdown
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import styles from "../../../styles/markdown.module.css";
-import { ChatOpenAI } from 'langchain/chat_models/openai';
+
+// components
+import VerifyKeyForm from "../../../components/VerifyKeyForm";
+import SubmitButton from "../../../components/SubmitButton";
 
 // lazy loaded components
 const MarkdownToPDFButton = dynamic(() =>
@@ -24,12 +23,12 @@ const MarkdownToPDFButton = dynamic(() =>
 
 export default function Resume() 
 {
-    // client key status
-    const [key, setKey] = useState(null);
-    const [keyStatus, setKeyStatus] = useState(null); // 3 STATES -> null, "VALID", "INVALID"
-
     // form submission status
     const [isSubmitted, setSubmitted] = useState(false);
+
+    // client key status
+    const [key, setKey] = useState(null);
+    const [keyStatus, setKeyStatus] = useState(null); // 3 STATES -> null, "VALID", "INVALID" 
 
     // store input text
     const [job, setJob] = useState(null);
@@ -39,38 +38,6 @@ export default function Resume()
     // store new resume
     const [response, setResponse] = useState("");
     const [isDoneGenerating, setDoneGenerating] = useState(false);
-
-    // sends a test req with current key
-    const sendTestRequest = async () => {
-        
-        // make request to test api key API
-        //! DEV -> http://localhost:3000
-        //! PROD -> https://ouckah.dev
-        axios.post("https://ouckah.dev/api/testApiKey", {
-            key: key, 
-        })
-
-        // change key status based on response
-        .then((res) => {
-            setKeyStatus("VALID");
-        })
-        .catch((error) => {
-            console.error(error);
-            
-            setKeyStatus("INVALID");
-        });
-
-    }
-
-    // handles key submission
-    const verifyKeyHandler = async (event) => {
-
-        // prevent page from refreshing
-        event.preventDefault();
-        
-        await sendTestRequest();
-
-    }
 
     // handles form submission
     const submitResumeHandler = async (event) => {
@@ -197,74 +164,8 @@ export default function Resume()
                     <form 
                         className='flex flex-col gap-5 justify-center items-center w-1/2 h-full overflow-hidden'
                     >
-                        {
-                            keyStatus ? (
-                                <>
+                        <VerifyKeyForm key={key} keyStatus={keyStatus} onChange={setKey} onVerify={setKeyStatus}/>
 
-                                    {
-                                        keyStatus === "VALID" ? (
-                                            <>  
-                                                <label className="block place-self-start font-bold uppercase">
-                                                    OpenAI Key
-                                                </label>    
-                                                <input 
-                                                    className="block w-full p-2.5 marker:text-sm bg-gray-300 text-almost-black-100 rounded-lg shadow-md border-2 border-green-400" 
-                                                    type="password" 
-                                                    placeholder="sk-8fds2fhG7sdf9as4G2df1df6G3"
-                                                    name="key"
-                                                    onChange={(e) => setKey(e.target.value)}
-                                                    disabled
-                                                />
-
-                                            </>
-                                        ) : (
-                                            <> 
-                                                <label className="block place-self-start font-bold uppercase">
-                                                    OpenAI Key
-                                                </label>
-                                                <input 
-                                                    className="block w-full p-2.5 marker:text-sm bg-white text-almost-black-100 rounded-lg shadow-md border-2 border-red-400" 
-                                                    type="password" 
-                                                    placeholder="sk-8fds2fhG7sdf9as4G2df1df6G3"
-                                                    name="key"
-                                                    onChange={(e) => setKey(e.target.value)}
-                                                />
-                                                <p className="text-red-400 -translate-y-3">Invalid API Key</p>
-                                                <button 
-                                                    className="w-28 h-8 bg-almost-black-100 rounded-lg text-white font-bold shadow-md uppercase transition-all duration-300 hover:shadow-xl" 
-                                                    onClick={verifyKeyHandler}
-                                                >
-                                                    Verify
-                                                </button>
-
-                                            </>
-                                        )
-                                    }
-
-                                </>
-                            ) : (
-                                <>
-
-                                    <label className="block place-self-start font-bold uppercase">
-                                        OpenAI Key
-                                    </label>
-                                    <input 
-                                        className="block w-full p-2.5 marker:text-sm bg-white text-almost-black-100 rounded-lg shadow-md" 
-                                        type="password" 
-                                        placeholder="sk-8fds2fhG7sdf9as4G2df1df6G3"
-                                        name="key"
-                                        onChange={(e) => setKey(e.target.value)}
-                                    />
-                                    <button 
-                                        className="w-28 h-8 bg-almost-black-100 rounded-lg text-white font-bold shadow-md uppercase transition-all duration-300 hover:shadow-xl" 
-                                        onClick={verifyKeyHandler}
-                                    >
-                                        Verify
-                                    </button>
-
-                                </>
-                            )
-                        }
                         <label className="block place-self-start font-bold uppercase">
                             Job Position
                         </label>
@@ -309,29 +210,8 @@ export default function Resume()
                             onChange={(e) => setResume(e.target.value)}
                             required
                         />
-                        {
-                            keyStatus === "VALID" ? (
 
-                                <button 
-                                    className="w-36 h-12 bg-almost-black-100 rounded-lg text-white font-bold shadow-md uppercase transition-all duration-300 hover:shadow-xl" 
-                                    type="submit"
-                                    onClick={submitResumeHandler}
-                                >
-                                    {
-                                        isSubmitted ? (
-
-                                            <RefreshIcon className="animate-spin"/>
-
-                                        ) : (
-
-                                            "Submit"
-
-                                        )
-                                    }
-                                </button>
-
-                            ) : (<></>)
-                        }
+                        <SubmitButton enabled={keyStatus === "VALID"} loading={isSubmitted} onClick={submitResumeHandler} />
                     </form>
 
                 )}
