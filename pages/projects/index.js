@@ -40,6 +40,13 @@ export default function Projects()
                             date="May 17th, 2023"
                             link='resume'
                         />
+                        <ProjectCard 
+                            title="TikTok Chat"
+                            description="TikTok"
+                            image="https://media.istockphoto.com/id/638584374/vector/writer-writing-on-paper-sheet-workplace-author-desktop-write-letter.jpg?s=612x612&w=0&k=20&c=_OM7rmAP12TuzdY4WXekh_rVJMNzpcCNUDqVqmU52TI="
+                            date="May 28th, 2023"
+                            link='tiktok'
+                        />
                     </div>
                 </div>
             </div>
