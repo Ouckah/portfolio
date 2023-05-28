@@ -1,10 +1,9 @@
 import { useState } from "react";
 
-const VerifyKeyForm = ({ onChange, onVerify }) => {
+const VerifyKeyForm = ({ keyStatus, onChange, onVerify }) => {
 
     // client key status
     const [key, setKey] = useState(null);
-    const [keyStatus, setKeyStatus] = useState(null);
 
     // handle input changes
     const handleChange = ({ target }) => {  
@@ -21,9 +20,6 @@ const VerifyKeyForm = ({ onChange, onVerify }) => {
     }
 
     const handleVerification = (status) => {
-
-        // set local key status (for rendering)
-        setKeyStatus(status);
 
         if (typeof onVerify === 'function') {
             
