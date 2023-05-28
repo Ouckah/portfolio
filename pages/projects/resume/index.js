@@ -164,7 +164,7 @@ export default function Resume()
                     <form 
                         className='flex flex-col gap-5 justify-center items-center w-1/2 h-full overflow-hidden'
                     >
-                        <VerifyKeyForm key={key} keyStatus={keyStatus} onChange={setKey} onVerify={setKeyStatus}/>
+                        <VerifyKeyForm onChange={setKey} onVerify={setKeyStatus}/>
 
                         <label className="block place-self-start font-bold uppercase">
                             Job Position
@@ -210,7 +210,7 @@ export default function Resume()
                             onChange={(e) => setResume(e.target.value)}
                             required
                         />
-
+                        
                         <SubmitButton enabled={keyStatus === "VALID"} loading={isSubmitted} onClick={submitResumeHandler} />
                     </form>
 

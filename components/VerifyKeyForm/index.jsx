@@ -1,18 +1,32 @@
 import { useState } from "react";
 
-const VerifyKeyForm = ({ key, keyStatus, onChange, onVerify }) => {
+const VerifyKeyForm = ({ onChange, onVerify }) => {
+
+    // client key status
+    const [key, setKey] = useState(null);
+    const [keyStatus, setKeyStatus] = useState(null);
 
     // handle input changes
-    const handleChange = ({ target }) => { 
-        if (typeof onChange === 'function') {
+    const handleChange = ({ target }) => {  
 
+        // set local key (for verfication)
+        setKey(target.value);
+        
+        if (typeof onChange === 'function') {
+            
             // call the callback passing in whatever parameters you decide
             onChange(target.value);
 
-        }   
+        }    
     }
 
     const handleVerification = (status) => {
+
+        // set local key status (for rendering)
+        setKeyStatus(status);
+
+        console.log(keyStatus);
+
         if (typeof onVerify === 'function') {
             
             // call the callback passing in whatever parameters you decide
