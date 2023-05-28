@@ -25,8 +25,6 @@ const VerifyKeyForm = ({ onChange, onVerify }) => {
         // set local key status (for rendering)
         setKeyStatus(status);
 
-        console.log(keyStatus);
-
         if (typeof onVerify === 'function') {
             
             // call the callback passing in whatever parameters you decide
