@@ -19,6 +19,7 @@ import { ChatOpenAI } from 'langchain/chat_models/openai';
 // lazy loaded components
 const MarkdownToPDFButton = dynamic(() =>
   import('../../../components/MarkdownToPDFButton').then((mod) => mod.MarkdownToPDFButton),
+  { ssr: false }
 );
 
 export default function Resume() 
