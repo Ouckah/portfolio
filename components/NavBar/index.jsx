@@ -13,7 +13,6 @@ export const NavBar = () =>
                 <div className='flex flex-row justify-evenly items-center lg:gap-20 gap-8'>
                     
                     <NavLink text='Home' link='.'/>
-                    <NavLink text='About' link='/about'/>
                     <NavLink text='Projects' link='/projects'/>
                     <NavLink text='Socials' link='/socials'/>
 
