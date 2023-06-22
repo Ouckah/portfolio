@@ -8,7 +8,9 @@ export default function Projects()
         
             <meta content="width=device-width, initial-scale=1" name="viewport" />
 
-            <Header title="Projects"/>
+            <div className="w-full h-[15em]">
+                <Header title="Projects"/>
+            </div>
 
             <div className='w-full min-h-screen bg-almost-black-500'>
                 <div className='flex md:flex-row flex-col justify-center items-center md:gap-16 gap-10 pt-10 pb-16'>
