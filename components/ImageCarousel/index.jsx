@@ -44,9 +44,7 @@ export const ImageCarousel = ({ images }) => {
                 <img
                     key={image.id}
                     src={image}
-                    layout="fill"
-                    object-fit='contain'
-                    className="rounded-2xl animate-fadeIn"
+                    className="rounded-2xl animate-fadeIn object-contain"
                 />
               );
             }
